@@ -1,8 +1,12 @@
 name: Cloudinary onboarding
 
-# Lancement manuel depuis l'onglet "Actions" (bouton "Run workflow").
+# Se lance à chaque push sur la branche de travail, et aussi manuellement
+# depuis l'onglet "Actions" (bouton "Run workflow").
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - claude/cloudinary-sdk-onboarding-nfsrpk
 
 jobs:
   run-script:
