@@ -6,19 +6,24 @@ Lance ce script directement :  ./cloudinary_onboarding.py
 (après avoir renseigné l'API secret ci-dessous).
 """
 
+import os
+
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from cloudinary import CloudinaryImage
 
 # ---------------------------------------------------------------------------
-# 1. Configuration de Cloudinary (bloc inline, pas de fichier .env)
+# 1. Configuration de Cloudinary
+#    Le cloud name et l'API key ne sont pas secrets : on peut les laisser ici.
+#    L'API SECRET, lui, est lu depuis la variable d'environnement
+#    CLOUDINARY_API_SECRET — il n'apparaît donc JAMAIS dans ce fichier.
 # ---------------------------------------------------------------------------
 cloudinary.config(
-    cloud_name="dhxklbcx",            # Cloud name (réel)
-    api_key="518929473176113",        # API key (réel)
-    api_secret="YOUR_API_SECRET",     # ← replace this  (Click 'View API Keys' pour copier le secret)
-    secure=True,                      # force les URLs en HTTPS
+    cloud_name="dhxklbcx",                       # Cloud name (réel, non secret)
+    api_key="518929473176113",                   # API key (réel, non secret)
+    api_secret=os.environ["CLOUDINARY_API_SECRET"],  # secret lu depuis l'environnement
+    secure=True,                                 # force les URLs en HTTPS
 )
 
 # ---------------------------------------------------------------------------
