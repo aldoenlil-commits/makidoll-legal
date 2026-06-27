@@ -21,7 +21,7 @@ from cloudinary import CloudinaryImage
 # ---------------------------------------------------------------------------
 cloudinary.config(
     cloud_name="dhxklbcx",                       # Cloud name (réel, non secret)
-    api_key="518929473176113",                   # API key (réel, non secret)
+    api_key="598232418875687",                   # API key (réel, non secret)
     api_secret=os.environ["CLOUDINARY_API_SECRET"],  # secret lu depuis l'environnement
     secure=True,                                 # force les URLs en HTTPS
 )
