@@ -20,23 +20,30 @@ jobs:
       - name: Installer le SDK Cloudinary
         run: pip install cloudinary
 
-      - name: Lister les vidéos et leurs vraies URLs
+      - name: Chercher l'asset par son nom (tous types)
         env:
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
         run: |
           python - <<'PY'
-          import os, cloudinary, cloudinary.api
+          import os, cloudinary
+          from cloudinary import Search
           cloudinary.config(
               cloud_name="dhxklbcx",
               api_key="598232418875687",
               api_secret=os.environ["CLOUDINARY_API_SECRET"],
               secure=True,
           )
-          res = cloudinary.api.resources(resource_type="video", type="upload", max_results=50)
-          vids = res.get("resources", [])
-          print(f"=== {len(vids)} vidéo(s) trouvée(s) ===")
-          for r in vids:
-              print("public_id :", r.get("public_id"))
-              print("secure_url:", r.get("secure_url"))
+          for q in ["1F0EB613", "7A1FD781", "iuldwd", "qufcfu"]:
+              print("### recherche:", q)
+              try:
+                  r = Search().expression(q).max_results(10).execute()
+                  print("total_count:", r.get("total_count"))
+                  for a in r.get("resources", []):
+                      print(" -", a.get("resource_type"), "/", a.get("type"),
+                            "| public_id:", a.get("public_id"),
+                            "| format:", a.get("format"))
+                      print("   secure_url:", a.get("secure_url"))
+              except Exception as e:
+                  print("ERREUR:", e)
               print("---")
           PY
