@@ -1,0 +1,42 @@
+name: List Cloudinary videos
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/cloudinary-sdk-onboarding-nfsrpk
+    paths:
+      - .github/workflows/list_videos.yml
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Installer le SDK Cloudinary
+        run: pip install cloudinary
+
+      - name: Lister les vidéos et leurs vraies URLs
+        env:
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+        run: |
+          python - <<'PY'
+          import os, cloudinary, cloudinary.api
+          cloudinary.config(
+              cloud_name="dhxklbcx",
+              api_key="598232418875687",
+              api_secret=os.environ["CLOUDINARY_API_SECRET"],
+              secure=True,
+          )
+          res = cloudinary.api.resources(resource_type="video", type="upload", max_results=50)
+          vids = res.get("resources", [])
+          print(f"=== {len(vids)} vidéo(s) trouvée(s) ===")
+          for r in vids:
+              print("public_id :", r.get("public_id"))
+              print("secure_url:", r.get("secure_url"))
+              print("---")
+          PY
