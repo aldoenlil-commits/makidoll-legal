@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Vérifie l'URL publique de la vidéo Cloudinary
         run: |
-          BASE="https://res.cloudinary.com/dhxklbcx/video/upload/7A1FD781-A144-45EC-AB4A-09A9465E9485_qufcfu"
+          BASE="https://res.cloudinary.com/dhxklbcx/video/upload/1F0EB613-464B-4DC0-A026-4D67F9B59F54_iuldwd"
           for ext in mp4 mov; do
             url="$BASE.$ext"
             echo "=== .$ext ==="
