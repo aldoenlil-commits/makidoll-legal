@@ -1,0 +1,26 @@
+name: Check video URL
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/cloudinary-sdk-onboarding-nfsrpk
+    paths:
+      - .github/workflows/check_video_url.yml
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifie l'URL publique de la vidéo Cloudinary
+        run: |
+          BASE="https://res.cloudinary.com/dhxklbcx/video/upload/7A1FD781-A144-45EC-AB4A-09A9465E9485_qufcfu"
+          for ext in mp4 mov; do
+            url="$BASE.$ext"
+            echo "=== .$ext ==="
+            echo "URL: $url"
+            curl -sS -o /dev/null \
+              -w "HTTP %{http_code} | content-type=%{content_type} | bytes=%{size_download}\n" \
+              -r 0-1023 "$url" || echo "(échec requête)"
+            echo
+          done
